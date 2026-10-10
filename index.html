@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <!-- favicon -->
+	    <link rel="icon" type="image/png" href="./favicon-96x96.png" sizes="96x96" />
+	    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+	    <link rel="shortcut icon" href="./favicon.ico" />
+	    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+	    <link rel="manifest" href="/site.webmanifest" />
+    <title>Debra - Software QA</title>
+    <style>
+      /* Reset & Base Styles */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: #f8fafc;
+        color: #0f172a;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      /* Container Utility */
+      .container {
+        width: 100%;
+        max-width: 1024px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      /* Navigation */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background-color: #0f172a;
+        border-bottom: 2px solid #1e40af;
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
+      }
+
+      .nav-inner {
+        height: 4.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        color: #ffffff;
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .brand:hover {
+        color: #93c5fd;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      nav a {
+        color: #cbd5e1;
+        text-decoration: none;
+        font-size: 0.925rem;
+        font-weight: 500;
+        transition: color 0.15s ease;
+      }
+
+      nav a:hover {
+        color: #ffffff;
+      }
+
+      /* Main Layout */
+      main {
+        flex: 1;
+        padding-top: 3.5rem;
+        padding-bottom: 5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 5.5rem;
+      }
+
+      /* Hero Section */
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      @media (min-width: 768px) {
+        .hero-grid {
+          grid-template-columns: 5fr 7fr;
+          gap: 3.5rem;
+        }
+      }
+
+      .hero-image-wrap {
+        display: flex;
+        justify-content: center;
+      }
+
+      .profile-card {
+        width: 18rem;
+        height: 18rem;
+        border-radius: 1.25rem;
+        background-color: #ffffff;
+        border: 3px solid #e2e8f0;
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+        overflow: hidden;
+        padding: 0.5rem;
+      }
+
+      @media (min-width: 1024px) {
+        .profile-card {
+          width: 20rem;
+          height: 20rem;
+        }
+      }
+
+      .profile-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0.875rem;
+        display: block;
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      @media (min-width: 768px) {
+        .hero-content {
+          text-align: left;
+        }
+      }
+
+      .hero-content h1 {
+        font-size: 2.75rem;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+      }
+
+      .hero-content h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #1e40af;
+        margin-top: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-content p {
+        font-size: 1.125rem;
+        color: #475569;
+        margin-top: 1rem;
+        max-width: 32rem;
+      }
+
+      .hero-actions {
+        margin-top: 1.75rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      @media (min-width: 768px) {
+        .hero-actions {
+          justify-content: flex-start;
+        }
+      }
+
+      .btn-secondary {
+        display: inline-block;
+        padding: 0.75rem 1.625rem;
+        background-color: #e2e8f0;
+        color: #1e293b;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        border: 1px solid #cbd5e1;
+        transition: all 0.2s ease;
+      }
+
+      .btn-secondary:hover {
+        background-color: #cbd5e1;
+        color: #0f172a;
+        border-color: #94a3b8;
+      }
+
+      /* Section Headers */
+      .section-title {
+        font-size: 2rem;
+        font-weight: 800;
+        text-align: center;
+        color: #0f172a;
+        letter-spacing: -0.025em;
+        margin-bottom: 2rem;
+      }
+
+      /* About Section */
+      .about-card {
+        background-color: #ffffff;
+        border: 2px solid #0f172a;
+        border-radius: 1.75rem;
+        padding: 3.5rem 2rem;
+        min-height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.04);
+      }
+
+      .about-card p {
+        font-size: 1.125rem;
+        color: #334155;
+        text-align: center;
+        max-width: 48rem;
+      }
+
+      /* Projects Section */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      @media (min-width: 768px) {
+        .projects-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      .project-card {
+        background-color: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.875rem;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      }
+
+      .project-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 20px -3px rgba(15, 23, 42, 0.1);
+        border-color: #93c5fd;
+      }
+
+      .project-img-wrap {
+        width: 100%;
+        height: 12.5rem;
+        background-color: #f1f5f9;
+        overflow: hidden;
+      }
+
+      .project-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .project-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        gap: 0.75rem;
+      }
+
+      .project-body h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .project-body p {
+        font-size: 0.9375rem;
+        color: #64748b;
+        flex-grow: 1;
+        line-height: 1.5;
+      }
+
+      .project-action {
+        padding-top: 0.75rem;
+      }
+
+      .btn-primary {
+        display: inline-block;
+        padding: 0.625rem 1.25rem;
+        background-color: #2563eb;
+        color: #ffffff;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s ease;
+        box-shadow: 0 1px 2px 0 rgba(37, 99, 235, 0.3);
+      }
+
+      .btn-primary:hover {
+        background-color: #1d4ed8;
+      }
+
+      /* Skills and Tools Section */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 52rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      @media (min-width: 768px) {
+        .skills-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .skill-box {
+        background-color: #ffffff;
+        border: 1px solid #0f172a;
+        overflow: hidden;
+        border-radius: 0.375rem;
+        box-shadow: 0 2px 4px rgba(15, 23, 42, 0.05);
+      }
+
+      .skill-header {
+        background-color: #f1f5f9;
+        border-bottom: 1px solid #0f172a;
+        padding: 0.75rem;
+        text-align: center;
+      }
+
+      .skill-header h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .skill-list {
+        list-style: none;
+        padding: 0.5rem 0;
+        margin: 0;
+      }
+
+      .skill-list li {
+        padding: 0.625rem 1rem;
+        text-align: center;
+        font-size: 0.9375rem;
+        color: #334155;
+        border-bottom: 1px solid #f1f5f9;
+      }
+
+      .skill-list li:last-child {
+        border-bottom: none;
+      }
+
+      /* Contact Section */
+      .contact-card {
+        background-color: #ffffff;
+        border: 2px solid #0f172a;
+        border-radius: 1.75rem;
+        padding: 3.5rem 2rem;
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.04);
+      }
+
+      .contact-content {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        font-size: 1rem;
+        color: #334155;
+      }
+
+      .contact-content a {
+        color: #2563eb;
+        text-decoration: underline;
+        font-weight: 500;
+      }
+
+      .contact-content a:hover {
+        color: #1e40af;
+      }
+
+      /* Footer */
+      footer {
+        border-top: 1px solid #0f172a;
+        background-color: #ffffff;
+        padding: 2.25rem 1.5rem;
+        text-align: center;
+        color: #475569;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- BEGIN: NavigationBar -->
+    <header>
+      <div class="container nav-inner">
+        <!-- EDIT: Navbar_brand -->
+        <a class="brand" href="#">Sofware Test Manager / QA Lead</a>
+        <nav aria-label="Main Navigation">
+          <ul>
+            <li>
+              <a href="#about">About</a>
+            </li>
+            <li>
+              <a href="#projects">Projects</a>
+            </li>
+            <li>
+              <a href="#skills">Skills/Tools</a>
+            </li>
+            <li>
+              <a href="#contact">Contact</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <!-- END: NavigationBar -->
+    <main class="container">
+      <!-- BEGIN: HeroSection -->
+      <section aria-label="Introduction" id="hero">
+        <div class="hero-grid">
+          <div class="hero-image-wrap">
+            <div class="profile-card">
+              <!-- EDIT: PROFILE_IMAGE -->
+              <img alt="Profile portrait" src="./profile.jpg" />
+            </div>
+          </div>
+          <div class="hero-content">
+            <!-- EDIT: YOUR_NAME -->
+            <h1>Debra Bula</h1>
+            <!-- EDIT: YOUR_JOB_TITLE -->
+            <h2>Software Test Manager / QA Lead</h2>
+            <!-- EDIT: SHORT_INTRODUCTION -->
+            <p>Software QA Manager and Test Lead specializing in test strategy, automation, quality assurance, defect management, and reliable software delivery.
+</p>
+            <div class="hero-actions">
+              <a class="btn-secondary" href="#projects">View my Projects</a>
+              <a class="btn-secondary" href="#contact">Contact Me</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END: HeroSection -->
+      <!-- BEGIN: AboutSection -->
+      <section aria-label="About Me" id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-card">
+          <!-- EDIT: ABOUT_YOU -->
+          <p>As a Software QA Manager and Test Lead, I focus on delivering reliable, high-quality software through effective testing strategies, structured quality assurance processes, and continuous improvement. My expertise includes test planning, test management, manual and automated testing, defect tracking, risk assessment, and cross-functional team collaboration. I work closely with developers, product owners, and stakeholders to identify issues early, improve testing efficiency, and ensure software meets business and user requirements. My goal is to strengthen software quality, reduce delivery risks, and support confident, successful product releases.</p>
+        </div>
+      </section>
+      <!-- END: AboutSection -->
+      <!-- BEGIN: ProjectsSection -->
+      <section aria-label="Projects" id="projects">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+          <!-- EDIT: PROJECT_1 -->
+          <article class="project-card">
+            <div class="project-img-wrap">
+              <img alt="Project visual" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpLEFFCHnTGAyzJoZicl0aPiTbFimsAwXDrAS0VNg14w&s=10" />
+            </div>
+            <div class="project-body">
+              <h3>1. Test Automation Strategy and Implementation</h3>
+              <p>Develop a test automation strategy to improve software quality, reduce repetitive manual testing, and support faster release cycles using automated test scripts and QA tools. The project would focus on test case prioritization, automation planning, and measurable quality metrics to help development teams improve testing efficiency and software reliability.</p>
+              <div class="project-action">
+                <a class="btn-primary" href="#">Project Link</a>
+              </div>
+            </div>
+          </article>
+          <!-- EDIT: PROJECT_2 -->
+          <article class="project-card">
+            <div class="project-img-wrap">
+              <img alt="Project visual" src="https://www.kualitee.com/wp-content/uploads/2021/06/Automation-Testing.jpg" />
+            </div>
+            <div class="project-body">
+              <h3>2. Software QA Team and Test Project Management</h3>
+              <p>Create a software quality assurance management framework covering test plan preparation, team workload allocation, stakeholder communication, and QA budget planning. This project would demonstrate how risk-based testing, resource management, and project tracking can help teams meet delivery deadlines while maintaining software quality standards.</p>
+              <div class="project-action">
+                <a class="btn-primary" href="#">Project Link</a>
+              </div>
+            </div>
+          </article>
+          <!-- EDIT: PROJECT_3 -->
+          <article class="project-card">
+            <div class="project-img-wrap">
+              <img alt="Project visual" src="https://media.licdn.com/dms/image/v2/D4D12AQGAJMDt-hi2PQ/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1738046392540?e=2147483647&v=beta&t=8VSSTi0QzgzN1PfbrPxE6SqLXQRNHIgYXtC5TUZBOtg" />
+            </div>
+            <div class="project-body">
+              <h3>3. QA Tool Evaluation and Risk-Based Testing Framework</h3>
+              <p>Design a framework for evaluating software testing tools and implementing risk-based test planning to align testing efforts with business priorities. The project would include tool comparisons, test coverage analysis, defect tracking, and recommendations to help stakeholders make informed decisions about QA investments and testing processes.</p>
+              <div class="project-action">
+                <a class="btn-primary" href="#">Project Link</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+      <!-- END: ProjectsSection -->
+      <!-- BEGIN: SkillsAndToolsSection -->
+      <section aria-label="Skills and Tools" id="skills">
+        <h2 class="section-title">Skills and Tools</h2>
+        <div class="skills-grid">
+          <!-- EDIT: SKILLS -->
+          <div class="skill-box">
+            <div class="skill-header">
+              <h3>Manual and Exploratory Testing</h3>
+            </div>
+            <ul class="skill-list">
+              <li>Test Strategy and Test Planning</li>
+              <li>Test Automation and Framework Development </li>
+              <li>Manual and Exploratory Testing</li>
+              <li>Quality Assurance and Process Improvement</li>
+              <li>Defect Tracking and Root Cause Analysis</li>
+              <li>API Testing and Integration Testing</li>
+              <li>Regression Testing and Risk-Based Testing</li>
+              <li>Agile and Scrum Methodologies</li>
+              <li>Test Team Leadership and Mentoring</li>
+              <li>Continuous Integration and Continuous Testing</li>
+            </ul>
+          </div>
+          <!-- EDIT: TOOLS -->
+          <div class="skill-box">
+            <div class="skill-header">
+              <h3>Tools / Technologies</h3>
+            </div>
+            <ul class="skill-list">
+              <li>Selenium WebDriver</li>
+              <li>Playwright</li>
+              <li>Robot Framewortk with Python</li>
+              <li>Postman</li>
+              <li>SoapUI NG Pro / ReadyAPI</li>
+              <li>Jira</li>
+              <li>Jenkins</li>
+              <li>Git and GitHub</li>
+              <li>SQL and Database Testing</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <!-- END: SkillsAndToolsSection -->
+      <!-- BEGIN: ContactSection -->
+      <section aria-label="Contact" id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-card">
+          <!-- EDIT: CONTACT_INFO -->
+          <div class="contact-content">
+            <p>Email: <a href="mailto:your.email@example.com">debra.bula@gmail.com</a>
+            </p>
+            <p>Contact: 0995 - XXX - XXXX</p>
+            <p>Social Media: <a href="#">https://www.linkedin.com/in/debrabula/</a>
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- END: ContactSection -->
+    </main>
+    <!-- BEGIN: Footer -->
+    <footer>
+      <!-- EDIT: FOOTER -->
+      <p>©2026  Debra Bula. All rights reserved.</p>
+    </footer>
+    <!-- END: Footer -->
+  </body>
+</html>
